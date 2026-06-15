@@ -1,0 +1,520 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Top 50 Product Companies Guide</title>
+<style>
+:root {
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --color-page: #f6f7f2;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f8faf7;
+  --color-text-primary: #18201f;
+  --color-text-secondary: #65706c;
+  --color-text-info: #0f766e;
+  --color-border-primary: #cfd8d2;
+  --color-border-secondary: #dde5df;
+  --color-border-tertiary: #e8eee9;
+  --color-accent: #0f766e;
+  --color-accent-dark: #115e59;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --shadow-soft: 0 18px 48px rgba(24, 32, 31, 0.10);
+  --shadow-card: 0 10px 26px rgba(24, 32, 31, 0.07);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  min-height: 100vh;
+  padding: 32px;
+  font-family: var(--font-sans);
+  color: var(--color-text-primary);
+  background: linear-gradient(180deg, rgba(15, 118, 110, 0.08), rgba(246, 247, 242, 0) 360px), var(--color-page);
+  line-height: 1.5;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(24, 32, 31, 0.055) 1px, transparent 1px);
+  background-size: 18px 18px;
+  mask-image: linear-gradient(to bottom, black, transparent 70%);
+}
+body > * { max-width: 1240px; margin-left: auto; margin-right: auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 34px 36px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(15, 118, 110, 0.16);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(240, 248, 245, 0.94)), var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+.hero::after { content: "Top 50"; position: absolute; right: 30px; bottom: -18px; color: rgba(15, 118, 110, 0.08); font-size: 86px; font-weight: 800; line-height: 1; pointer-events: none; }
+.hero h1 { max-width: 760px; font-size: clamp(30px, 4vw, 52px); line-height: 1.05; font-weight: 800; letter-spacing: 0; color: #14211f; }
+.hero p { max-width: 760px; margin-top: 14px; font-size: 16px; color: var(--color-text-secondary); }
+.tabs {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid rgba(207, 216, 210, 0.8);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 26px rgba(24, 32, 31, 0.08);
+}
+.tab { min-height: 40px; padding: 9px 15px; border: 1px solid transparent; border-radius: 999px; background: transparent; color: var(--color-text-secondary); font: 700 14px/1 var(--font-sans); cursor: pointer; transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease; }
+.tab.active { background: var(--color-accent); color: white; border-color: var(--color-accent-dark); box-shadow: 0 8px 18px rgba(15, 118, 110, 0.22); }
+.tab:hover { transform: translateY(-1px); background: #edf5f1; color: var(--color-text-primary); }
+.tab.active:hover { background: var(--color-accent-dark); color: #fff; }
+.section { display: none; }
+.section.active { display: block; animation: fadeIn 0.22s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; padding: 16px; border: 1px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); background: var(--color-surface); box-shadow: var(--shadow-card); }
+.filters label { font-size: 14px; font-weight: 800; color: var(--color-text-primary); }
+.filters select, .filters input { height: 40px; border: 1px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: #fff; color: var(--color-text-primary); font: 600 14px/1 var(--font-sans); outline: none; }
+.filters select { padding: 0 34px 0 12px; }
+.filters input { width: min(260px, 100%); padding: 0 13px; }
+.filters select:focus, .filters input:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.14); }
+.count-label { display: inline-flex; align-items: center; min-height: 30px; margin-bottom: 10px; padding: 5px 11px; border: 1px solid #b9ddd7; border-radius: 999px; background: #edf8f5; color: var(--color-accent-dark); font-size: 13px; font-weight: 800; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--color-border-secondary); border-radius: 14px; background: var(--color-surface); box-shadow: var(--shadow-card); }
+table { width: 100%; min-width: 1180px; border-collapse: separate; border-spacing: 0; font-size: 13px; table-layout: fixed; }
+thead { display: table-header-group; }
+th { padding: 13px 10px; border-bottom: 1px solid var(--color-border-secondary); background: #eef5f1; color: #47544f; font-size: 11px; font-weight: 900; letter-spacing: 0.04em; text-align: left; text-transform: uppercase; white-space: nowrap; vertical-align: middle; }
+td { padding: 14px 10px; border-bottom: 1px solid var(--color-border-tertiary); color: var(--color-text-primary); vertical-align: top; word-break: normal; overflow-wrap: anywhere; }
+tr:last-child td { border-bottom: none; }
+tbody tr:nth-child(even) td { background: #fbfcfa; }
+tr:hover td { background: #edf8f5; }
+.co-name { display: block; font-weight: 900; font-size: 13px; color: #13201e; line-height: 1.25; }
+.co-site { display: block; margin-top: 3px; font-size: 12px; color: var(--color-text-info); line-height: 1.25; }
+a { color: var(--color-text-info); text-decoration: none; font-weight: 800; }
+a:hover { text-decoration: underline; }
+.skills-wrap { font-size: 12px; color: var(--color-text-secondary); line-height: 1.55; }
+.badge { display: inline-flex; align-items: center; min-height: 24px; padding: 4px 9px; border-radius: 999px; font-size: 11px; font-weight: 900; white-space: nowrap; }
+.b-easy { background: #e8f7df; color: #27610b; border: 1px solid #c8e8b8; }
+.b-moderate { background: #e4f3fb; color: #075071; border: 1px solid #bfe1ee; }
+.b-hard { background: #fff1d9; color: #7a4107; border: 1px solid #f3d5a7; }
+.b-vhard { background: #ffe9e1; color: #81311b; border: 1px solid #efc1b3; }
+.b-elite { background: #eeedff; color: #453895; border: 1px solid #cfcbff; }
+.b-faang { background: #fde8ef; color: #912946; border: 1px solid #f5bfd0; }
+.tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; }
+.tier-card, .road-card, .stat { border: 1px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); background: var(--color-surface); box-shadow: var(--shadow-card); }
+.tier-card { padding: 18px; transition: transform 0.18s ease, box-shadow 0.18s ease; }
+.tier-card:hover { transform: translateY(-3px); box-shadow: 0 18px 34px rgba(24, 32, 31, 0.10); }
+.tier-card h3 { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; font-size: 16px; font-weight: 900; }
+.tier-card ol { padding-left: 20px; }
+.tier-card li { padding: 6px 0; font-size: 14px; font-weight: 750; }
+.tier-card li span { color: var(--color-text-secondary); font-size: 12px; font-weight: 650; }
+.stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 18px; }
+.stat { padding: 18px; background: linear-gradient(135deg, #ffffff, #f0f8f5); }
+.stat .n { font-size: 34px; line-height: 1; font-weight: 900; color: var(--color-accent-dark); }
+.stat .l { margin-top: 7px; font-size: 13px; color: var(--color-text-secondary); font-weight: 700; }
+.roadmap { display: flex; flex-direction: column; gap: 14px; }
+.road-card { padding: 18px; }
+.road-card .road-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.road-card .lc-badge { font-size: 22px; font-weight: 900; color: var(--color-text-primary); }
+.road-card .lc-label { font-size: 14px; color: var(--color-text-secondary); font-weight: 700; }
+.road-skills { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 10px; }
+.road-companies { display: flex; flex-wrap: wrap; gap: 8px; }
+.road-co { padding: 6px 10px; border: 1px solid var(--color-border-secondary); border-radius: 999px; background: var(--color-surface-soft); color: var(--color-text-primary); font-size: 12px; font-weight: 800; }
+.salary-bar { display: flex; align-items: center; gap: 8px; min-width: 96px; }
+.bar { height: 8px; border-radius: 999px; background: linear-gradient(90deg, var(--color-accent), #e0a528); min-width: 5px; }
+.faang-banner, #freshers > div:first-child { margin-bottom: 16px !important; padding: 15px 17px !important; border-radius: var(--border-radius-lg) !important; font-size: 14px !important; line-height: 1.55; box-shadow: var(--shadow-card); }
+.chart-wrap { margin-bottom: 24px; padding: 18px; border: 1px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); background: var(--color-surface); box-shadow: var(--shadow-card); }
+.chart-wrap h3 { margin-bottom: 14px; font-size: 18px; font-weight: 900; color: var(--color-text-primary); }
+button[onclick^="sendPrompt"] { border: 0; background: var(--color-accent); color: white; font-weight: 900; cursor: pointer; box-shadow: 0 10px 22px rgba(15, 118, 110, 0.22); }
+button[onclick^="sendPrompt"]:hover { background: var(--color-accent-dark); }
+@media (max-width: 760px) {
+  body { padding: 16px; }
+  .hero { padding: 24px 20px; border-radius: 14px; }
+  .hero::after { font-size: 54px; right: 16px; bottom: -10px; }
+  .hero h1 { font-size: 30px; }
+  .hero p { font-size: 14px; }
+  .tabs { position: static; padding: 9px; }
+  .tab { flex: 1 1 auto; min-width: 130px; }
+  .filters { align-items: stretch; }
+  .filters label { width: 100%; }
+  .filters select, .filters input { width: 100%; }
+  .tier-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<h2 class="sr-only">Top 50 product-based companies guide for software engineering freshers</h2>
+
+
+
+<div class="hero">
+  <h1>Top 50 product-based companies — software engineering guide</h1>
+  <p>Freshers hiring in India · Entry-level roles · Interview difficulty · Preparation roadmap</p>
+</div>
+
+<div class="tabs" role="tablist">
+  <button class="tab active" onclick="showTab('all')" role="tab" aria-selected="true">All 50 companies</button>
+  <button class="tab" onclick="showTab('tiers')" role="tab">Tier rankings</button>
+  <button class="tab" onclick="showTab('faang')" role="tab">FAANG+</button>
+  <button class="tab" onclick="showTab('freshers')" role="tab">Freshers-friendly</button>
+  <button class="tab" onclick="showTab('roadmap')" role="tab">Prep roadmap</button>
+</div>
+
+<div id="all" class="section active">
+  <div class="filters">
+    <label>Filter:</label>
+    <select onchange="filterTable()" id="diffFilter">
+      <option value="">All difficulty</option>
+      <option value="Easy">Easy</option>
+      <option value="Moderate">Moderate</option>
+      <option value="Hard">Hard</option>
+      <option value="Very Hard">Very Hard</option>
+      <option value="Elite">Elite</option>
+    </select>
+    <select onchange="filterTable()" id="fresherFilter">
+      <option value="">All fresher freq</option>
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+    </select>
+    <input type="text" id="searchBox" placeholder="Search company..." oninput="filterTable()" />
+  </div>
+  <div class="count-label" id="countLabel">Showing 50 companies</div>
+  <div class="table-wrap">
+    <table id="mainTable">
+      <thead>
+        <tr>
+          <th style="width:28px;">#</th>
+          <th style="width:120px;">Company</th>
+          <th style="width:90px;">Industry</th>
+          <th style="width:70px;">HQ</th>
+          <th style="width:60px;">Difficulty</th>
+          <th style="width:55px;">DSA</th>
+          <th style="width:60px;">Sys Design</th>
+          <th style="width:65px;">LeetCode</th>
+          <th style="width:55px;">Freshers</th>
+          <th style="width:80px;">Salary (India)</th>
+          <th style="width:130px;">Key skills</th>
+          <th style="width:80px;">Roles</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div id="tiers" class="section">
+  <div class="tier-grid" id="tierGrid"></div>
+</div>
+
+<div id="faang" class="section">
+  <div class="faang-banner"><strong>FAANG+ companies</strong> — Meta, Apple, Amazon, Netflix, Google, plus Microsoft & Nvidia. These require competitive programming-level DSA, advanced system design, and strong behavioral rounds. Expect 6–8 interview rounds.</div>
+  <div id="faangGrid" class="tier-grid"></div>
+  <div class="chart-wrap" style="margin-top:1rem;">
+    <h3>FAANG+ interview difficulty vs. India entry salary</h3>
+    <div style="position:relative; width:100%; height:260px;">
+      <canvas id="faangChart" role="img" aria-label="Bubble chart comparing FAANG+ companies by interview difficulty and India entry-level salary">Difficulty vs salary comparison for FAANG-level companies.</canvas>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:8px; font-size:12px; color:var(--color-text-secondary);">
+      <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#D4537E;"></span>FAANG+ company</span>
+    </div>
+  </div>
+</div>
+
+<div id="freshers" class="section">
+  <div style="background:#EAF3DE; border:0.5px solid #C0DD97; border-radius:var(--border-radius-md); padding:10px 14px; margin-bottom:1rem; font-size:13px; color:#27500A;">
+    <strong>High fresher hiring frequency</strong> — these product-based companies actively recruit from campuses and off-campus for entry-level SWE roles in India.
+  </div>
+  <div id="freshersGrid" class="tier-grid"></div>
+</div>
+
+<div id="roadmap" class="section">
+  <div class="stat-row">
+    <div class="stat"><div class="n">100</div><div class="l">LC problems → tier 1 targets</div></div>
+    <div class="stat"><div class="n">300</div><div class="l">LC problems → tier 2 targets</div></div>
+    <div class="stat"><div class="n">500+</div><div class="l">LC problems → FAANG ready</div></div>
+  </div>
+  <div class="roadmap" id="roadmapCards"></div>
+  <div style="margin-top:1.25rem; background:var(--color-background-secondary); border-radius:var(--border-radius-lg); padding:1rem 1.25rem;">
+    <div style="font-size:14px; font-weight:500; margin-bottom:8px;">Core skills timeline</div>
+    <div style="font-size:13px; color:var(--color-text-secondary); line-height:1.8;">
+      <strong style="color:var(--color-text-primary);">Months 1–3:</strong> Arrays, strings, hashmaps, two-pointer, sliding window, recursion, sorting → 100 LC problems<br>
+      <strong style="color:var(--color-text-primary);">Months 4–6:</strong> Linked lists, trees, graphs, BFS/DFS, DP basics, greedy, binary search → 300 LC problems<br>
+      <strong style="color:var(--color-text-primary);">Months 7–9:</strong> Advanced DP, tries, segment trees, system design basics, OS/DBMS/networking → 400 LC<br>
+      <strong style="color:var(--color-text-primary);">Months 10–12:</strong> Competitive programming patterns, HLD/LLD, scalability, mock interviews → 500+ LC
+    </div>
+  </div>
+  <button onclick="sendPrompt('Give me a detailed week-by-week DSA study plan for cracking product-based company interviews targeting 20+ LPA')" style="margin-top:1rem; font-size:13px; padding:8px 16px; border-radius:var(--border-radius-md);">Get a weekly study plan ↗</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const companies = [
+  {rank:1, name:"Zoho",hq:"India",industry:"SaaS/CRM",roles:"SWE, QA Engineer",diff:3,cat:"Easy",dsa:"Basic",sys:"Not Required",lc:"Easy",fresher:"High",salMin:5,salMax:8,skills:"Java/C++, OOPS, DS, Aptitude",rounds:"Written Test, Coding, Technical, HR",site:"zoho.com"},
+  {rank:2, name:"IBM",hq:"USA",industry:"Cloud/AI/Enterprise",roles:"Associate SWE, Cloud Eng",diff:5,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Medium",fresher:"Medium",salMin:12,salMax:22,skills:"Java/Python, Cloud, DSA, SQL, AI basics",rounds:"OA, Technical, Managerial, HR",site:"ibm.com"},
+  {rank:3, name:"ServiceNow",hq:"USA",industry:"SaaS/Workflow",roles:"Associate SWE, Platform Eng",diff:6,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Medium",fresher:"Medium",salMin:18,salMax:32,skills:"JavaScript, Java, DSA, REST, Cloud",rounds:"OA, 2 Tech, Hiring Manager, HR",site:"servicenow.com"},
+  {rank:4, name:"SAP Labs",hq:"Germany",industry:"Enterprise Software",roles:"Developer Associate, Cloud Eng",diff:5,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Easy-Medium",fresher:"High",salMin:12,salMax:22,skills:"Java, ABAP, SQL, OOPS, Cloud",rounds:"OA, Technical, Managerial, HR",site:"sap.com"},
+  {rank:5, name:"Juspay",hq:"India",industry:"Fintech/Payments",roles:"SDE-1, Backend Eng",diff:6,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Medium",fresher:"Medium",salMin:18,salMax:30,skills:"Haskell/Java, DSA, APIs, Payments",rounds:"OA, Coding, 2 Tech, HR",site:"juspay.in"},
+  {rank:6, name:"Freshworks",hq:"India",industry:"SaaS/CRM",roles:"SWE, Backend Eng",diff:5,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Easy-Medium",fresher:"High",salMin:12,salMax:18,skills:"Ruby/Python/Java, REST, DSA",rounds:"OA, 2–3 Tech, System, HR",site:"freshworks.com"},
+  {rank:7, name:"PhonePe",hq:"India",industry:"Fintech",roles:"SWE, Backend Eng",diff:5,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Medium",fresher:"Medium",salMin:15,salMax:22,skills:"Java/Kotlin, Spring, DSA, SQL",rounds:"OA, 2 Tech, System, HR",site:"phonepe.com"},
+  {rank:8, name:"Razorpay",hq:"India",industry:"Fintech/Payments",roles:"SWE, Platform Eng",diff:5,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Medium",fresher:"Medium",salMin:15,salMax:22,skills:"Go/Java/Python, APIs, DSA, SQL",rounds:"OA, 2 Tech, System, HR",site:"razorpay.com"},
+  {rank:9, name:"Swiggy",hq:"India",industry:"Food Tech",roles:"SDE-1, Backend Eng",diff:5,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Medium",fresher:"Medium",salMin:18,salMax:25,skills:"Java/Go, Microservices, DSA, Redis",rounds:"OA, 2–3 Tech, System, HR",site:"swiggy.com"},
+  {rank:10, name:"Zomato",hq:"India",industry:"Food Tech",roles:"SDE-1, Data Eng",diff:5,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Medium",fresher:"Medium",salMin:18,salMax:24,skills:"Python/Go/Java, DSA, SQL, APIs",rounds:"OA, 2 Tech, System, HR",site:"zomato.com"},
+  {rank:11, name:"Meesho",hq:"India",industry:"E-commerce",roles:"SDE-1, Backend Eng",diff:5,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Medium",fresher:"Medium",salMin:20,salMax:28,skills:"Java/Python, DSA, SQL, Microservices",rounds:"OA, 2 Tech, System, HR",site:"meesho.com"},
+  {rank:12, name:"Paytm",hq:"India",industry:"Fintech",roles:"SDE-1, Platform Eng",diff:5,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Medium",fresher:"Medium",salMin:14,salMax:20,skills:"Java, Spring, SQL, DSA",rounds:"OA, 2 Tech, HR",site:"paytm.com"},
+  {rank:13, name:"InMobi",hq:"India",industry:"Ad Tech",roles:"SWE, Data Eng",diff:5,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Medium",fresher:"Medium",salMin:15,salMax:22,skills:"Java/Scala, DSA, Big Data, SQL",rounds:"OA, 2 Tech, System, HR",site:"inmobi.com"},
+  {rank:14, name:"Groww",hq:"India",industry:"Fintech/WealthTech",roles:"SDE-1, Backend Eng",diff:6,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Medium",fresher:"Medium",salMin:18,salMax:26,skills:"Java/Go, DSA, SQL, Spring",rounds:"OA, 2–3 Tech, System, HR",site:"groww.in"},
+  {rank:15, name:"CRED",hq:"India",industry:"Fintech",roles:"SDE-1, Backend Eng",diff:6,cat:"Moderate",dsa:"Intermediate",sys:"Intermediate",lc:"Medium",fresher:"Low",salMin:22,salMax:32,skills:"Java/Kotlin/Go, DSA, APIs, System Design",rounds:"OA, 3 Tech, System, HR",site:"cred.club"},
+  {rank:16, name:"Ola",hq:"India",industry:"Mobility/EV",roles:"SDE-1, Backend Eng",diff:6,cat:"Moderate",dsa:"Intermediate",sys:"Basic",lc:"Medium",fresher:"Medium",salMin:16,salMax:24,skills:"Java/Python, DSA, SQL, Distributed Sys",rounds:"OA, 2–3 Tech, HR",site:"ola.com"},
+  {rank:17, name:"Atlassian",hq:"Australia",industry:"Dev Tools/SaaS",roles:"SWE, Backend Eng",diff:6,cat:"Moderate",dsa:"Intermediate",sys:"Intermediate",lc:"Medium",fresher:"Medium",salMin:25,salMax:40,skills:"Java, Python, DSA, System Design, APIs",rounds:"OA, 3 Tech, System, Values, HR",site:"atlassian.com"},
+  {rank:18, name:"Intuit",hq:"USA",industry:"Fintech/SaaS",roles:"SWE-1, Full Stack",diff:6,cat:"Moderate",dsa:"Intermediate",sys:"Intermediate",lc:"Medium",fresher:"Medium",salMin:22,salMax:35,skills:"Java/Python, React, DSA, System Design",rounds:"OA, 3 Tech, System, Behavioral",site:"intuit.com"},
+  {rank:19, name:"Nutanix",hq:"USA",industry:"Cloud/HCI",roles:"SWE, Systems Eng",diff:6,cat:"Moderate",dsa:"Intermediate",sys:"Intermediate",lc:"Medium-Hard",fresher:"Medium",salMin:20,salMax:35,skills:"C/C++/Python, OS, Networking, DSA",rounds:"OA, 3 Tech, System, HR",site:"nutanix.com"},
+  {rank:20, name:"Uber",hq:"USA",industry:"Mobility/Tech",roles:"SDE-1, Backend Eng",diff:7,cat:"Hard",dsa:"Advanced",sys:"Intermediate",lc:"Medium-Hard",fresher:"Low",salMin:35,salMax:55,skills:"Go/Java/Python, Distributed Systems, DSA",rounds:"Phone Screen, 4 Tech, System, Behavioral",site:"uber.com"},
+  {rank:21, name:"LinkedIn",hq:"USA",industry:"Social/B2B",roles:"SWE, Backend Eng",diff:7,cat:"Hard",dsa:"Advanced",sys:"Intermediate",lc:"Medium-Hard",fresher:"Low",salMin:30,salMax:50,skills:"Java/Python, DSA, System Design, APIs",rounds:"Phone Screen, 3–4 Tech, System, Behavioral",site:"linkedin.com"},
+  {rank:22, name:"Salesforce",hq:"USA",industry:"CRM/SaaS",roles:"SWE, Platform Eng",diff:7,cat:"Hard",dsa:"Advanced",sys:"Intermediate",lc:"Medium-Hard",fresher:"Medium",salMin:25,salMax:40,skills:"Java/Apex, DSA, REST, System Design",rounds:"OA, 3 Tech, System, Behavioral",site:"salesforce.com"},
+  {rank:23, name:"Adobe",hq:"USA",industry:"Creative Software",roles:"SWE-1, Full Stack",diff:7,cat:"Hard",dsa:"Advanced",sys:"Intermediate",lc:"Medium-Hard",fresher:"Medium",salMin:22,salMax:38,skills:"C++/Java/Python, DSA, System Design, ML",rounds:"OA, 3 Tech, System, Behavioral",site:"adobe.com"},
+  {rank:24, name:"Qualcomm",hq:"USA",industry:"Semiconductor",roles:"SWE, Firmware Eng",diff:7,cat:"Hard",dsa:"Advanced",sys:"Basic",lc:"Medium-Hard",fresher:"Medium",salMin:20,salMax:35,skills:"C/C++, OS, DSA, Embedded, Algorithms",rounds:"OA, 3 Tech, Behavioral",site:"qualcomm.com"},
+  {rank:25, name:"Oracle",hq:"USA",industry:"Enterprise Software",roles:"SWE-1, DB Eng",diff:7,cat:"Hard",dsa:"Advanced",sys:"Intermediate",lc:"Medium-Hard",fresher:"Medium",salMin:18,salMax:32,skills:"Java/C, SQL, DSA, DB Internals",rounds:"OA, 3 Tech, System, Behavioral",site:"oracle.com"},
+  {rank:26, name:"Cisco",hq:"USA",industry:"Networking/Cloud",roles:"SWE, Network Eng",diff:7,cat:"Hard",dsa:"Advanced",sys:"Intermediate",lc:"Medium-Hard",fresher:"Medium",salMin:18,salMax:32,skills:"C/Python, Networking, DSA, OS",rounds:"OA, 3 Tech, System, Behavioral",site:"cisco.com"},
+  {rank:27, name:"Samsung R&D India",hq:"South Korea",industry:"Consumer Electronics",roles:"SWE, Research Eng",diff:7,cat:"Hard",dsa:"Advanced",sys:"Basic",lc:"Medium-Hard",fresher:"Medium",salMin:20,salMax:32,skills:"C/C++/Java, OS, DSA, Algorithms",rounds:"OA, Written, 3 Tech, HR",site:"samsung.com"},
+  {rank:28, name:"VMware",hq:"USA",industry:"Virtualization/Cloud",roles:"SWE, Platform Eng",diff:7,cat:"Hard",dsa:"Advanced",sys:"Intermediate",lc:"Medium-Hard",fresher:"Low",salMin:22,salMax:38,skills:"Java/Go/Python, OS, DSA, Virtualization",rounds:"OA, 3 Tech, System, Behavioral",site:"vmware.com"},
+  {rank:29, name:"Flipkart",hq:"India",industry:"E-commerce",roles:"SDE-1, ML Eng",diff:7,cat:"Hard",dsa:"Advanced",sys:"Intermediate",lc:"Medium-Hard",fresher:"Medium",salMin:30,salMax:45,skills:"Java/Python, DSA, System Design, SQL",rounds:"OA, 3–4 Tech, System, HR",site:"flipkart.com"},
+  {rank:30, name:"Myntra",hq:"India",industry:"E-commerce/Fashion",roles:"SDE-1, Backend Eng",diff:7,cat:"Hard",dsa:"Advanced",sys:"Intermediate",lc:"Medium-Hard",fresher:"Low",salMin:25,salMax:40,skills:"Java/Go, DSA, Microservices, System Design",rounds:"OA, 3 Tech, System, HR",site:"myntra.com"},
+  {rank:31, name:"Dream11",hq:"India",industry:"Gaming/Fantasy Sports",roles:"SDE-1, Backend Eng",diff:7,cat:"Hard",dsa:"Advanced",sys:"Intermediate",lc:"Medium-Hard",fresher:"Low",salMin:25,salMax:40,skills:"Java/Go, DSA, Scalability, SQL",rounds:"OA, 3 Tech, System, HR",site:"dream11.com"},
+  {rank:32, name:"Twilio",hq:"USA",industry:"CPaaS/APIs",roles:"SWE, Platform Eng",diff:7,cat:"Hard",dsa:"Advanced",sys:"Intermediate",lc:"Medium-Hard",fresher:"Low",salMin:25,salMax:42,skills:"Go/Java/Python, APIs, DSA, Cloud",rounds:"Phone Screen, 3 Tech, System, Behavioral",site:"twilio.com"},
+  {rank:33, name:"Nvidia",hq:"USA",industry:"GPU/AI/Semiconductor",roles:"SWE, GPU Eng",diff:8,cat:"Very Hard",dsa:"Advanced",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:35,salMax:60,skills:"C++, CUDA, Parallel Computing, DSA, ML",rounds:"OA, 4–5 Tech, System, Behavioral",site:"nvidia.com"},
+  {rank:34, name:"Databricks",hq:"USA",industry:"Data/AI Platform",roles:"SWE, Data Eng",diff:8,cat:"Very Hard",dsa:"Advanced",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:32,salMax:55,skills:"Scala/Python/Java, Spark, DSA, Distributed",rounds:"OA, 4 Tech, System, Behavioral",site:"databricks.com"},
+  {rank:35, name:"Snowflake",hq:"USA",industry:"Cloud Data",roles:"SWE, Data Eng",diff:8,cat:"Very Hard",dsa:"Advanced",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:30,salMax:55,skills:"C++/Java/Python, SQL, DSA, System Design",rounds:"OA, 4 Tech, System, Behavioral",site:"snowflake.com"},
+  {rank:36, name:"Stripe",hq:"USA",industry:"Fintech/Payments",roles:"SWE, Platform Eng",diff:8,cat:"Very Hard",dsa:"Advanced",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:35,salMax:60,skills:"Ruby/Go/Java, APIs, DSA, System Design",rounds:"Phone Screen, 4 Tech, System, Behavioral",site:"stripe.com"},
+  {rank:37, name:"Palantir",hq:"USA",industry:"Data Analytics/Gov",roles:"Forward Deployed Eng, SWE",diff:8,cat:"Very Hard",dsa:"Advanced",sys:"Intermediate",lc:"Hard",fresher:"Low",salMin:30,salMax:55,skills:"Java/Python/Go, DSA, Problem Solving",rounds:"Take-Home, 3 Pairing Rounds, Manager",site:"palantir.com"},
+  {rank:38, name:"Coinbase",hq:"USA",industry:"Crypto/Fintech",roles:"SWE, Blockchain Eng",diff:8,cat:"Very Hard",dsa:"Advanced",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:30,salMax:55,skills:"Go/Python/Solidity, DSA, System Design",rounds:"Phone Screen, 4 Tech, System, Behavioral",site:"coinbase.com"},
+  {rank:39, name:"Cloudflare",hq:"USA",industry:"CDN/Networking",roles:"SWE, Network Eng",diff:8,cat:"Very Hard",dsa:"Advanced",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:28,salMax:50,skills:"Go/Rust/C, Networking, DSA, Systems",rounds:"Phone Screen, 4 Tech, System, Behavioral",site:"cloudflare.com"},
+  {rank:40, name:"Airbnb",hq:"USA",industry:"Travel/Marketplace",roles:"SWE, Full Stack",diff:8,cat:"Very Hard",dsa:"Advanced",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:35,salMax:60,skills:"Java/Python/React, DSA, System Design",rounds:"Phone Screen, 4 Tech, System, Behavioral",site:"airbnb.com"},
+  {rank:41, name:"Microsoft",hq:"USA",industry:"Cloud/Enterprise/AI",roles:"SWE, Cloud Eng, AI Eng",diff:8,cat:"Very Hard",dsa:"Advanced",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:30,salMax:55,skills:"C#/C++/Python, DSA, System Design, Azure",rounds:"OA, 4–5 Tech (Loop), System, Behavioral",site:"microsoft.com"},
+  {rank:42, name:"Amazon",hq:"USA",industry:"E-commerce/Cloud",roles:"SDE-1, Cloud Eng",diff:8,cat:"Very Hard",dsa:"Advanced",sys:"Advanced",lc:"Medium-Hard",fresher:"Low",salMin:28,salMax:50,skills:"Java/Python, DSA, System Design, LPs",rounds:"OA, 4 Tech, System, LP Behavioral",site:"amazon.com"},
+  {rank:43, name:"Apple",hq:"USA",industry:"Consumer Tech/OS",roles:"SWE, iOS Eng, Systems",diff:9,cat:"Elite",dsa:"Competitive",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:40,salMax:70,skills:"Swift/C++/Python, OS, DSA, Algorithms",rounds:"Phone Screen, 5–6 Tech, System, Values",site:"apple.com"},
+  {rank:44, name:"Uber Eats/HQ",hq:"USA",industry:"Tech/Mobility",roles:"SWE-2 / SDE-1",diff:8,cat:"Very Hard",dsa:"Advanced",sys:"Advanced",lc:"Medium-Hard",fresher:"Low",salMin:35,salMax:55,skills:"Go/Java, DSA, Distributed, System Design",rounds:"OA, 4 Tech, System, Behavioral",site:"uber.com"},
+  {rank:45, name:"Netflix",hq:"USA",industry:"Streaming/Entertainment",roles:"SWE, Platform Eng",diff:9,cat:"Elite",dsa:"Competitive",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:45,salMax:80,skills:"Java/Python/Go, DSA, Distributed Systems",rounds:"Phone Screen, 5 Tech, System, Culture",site:"netflix.com"},
+  {rank:46, name:"Google",hq:"USA",industry:"Search/Cloud/AI",roles:"L3 SWE, ML Eng",diff:9,cat:"Elite",dsa:"Competitive",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:45,salMax:80,skills:"C++/Java/Python/Go, DSA, System Design, ML",rounds:"Phone Screen, 4–5 Tech Onsite, System",site:"google.com"},
+  {rank:47, name:"Meta",hq:"USA",industry:"Social/VR/AI",roles:"E3 SWE, ML Eng",diff:9,cat:"Elite",dsa:"Competitive",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:45,salMax:80,skills:"C++/Python, DSA, System Design, ML",rounds:"Phone Screen, 4 Tech Onsite, System, Behavioral",site:"meta.com"},
+  {rank:48, name:"OpenAI",hq:"USA",industry:"AI/LLMs",roles:"SWE, Research Eng",diff:9,cat:"Elite",dsa:"Competitive",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:45,salMax:85,skills:"Python/C++, ML, DSA, Distributed, Research",rounds:"Phone Screen, 4–5 Tech, System, Research",site:"openai.com"},
+  {rank:49, name:"DeepMind (Google)",hq:"UK",industry:"AI Research",roles:"Research Eng, SWE",diff:10,cat:"Elite",dsa:"Competitive",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:50,salMax:90,skills:"Python/C++, ML Research, DSA, Publications",rounds:"Phone Screen, 5–6 Research+Tech, System",site:"deepmind.google"},
+  {rank:50, name:"Jane Street / Two Sigma",hq:"USA",industry:"Quantitative Finance",roles:"SWE, Quant Dev",diff:10,cat:"Elite",dsa:"Competitive",sys:"Advanced",lc:"Hard",fresher:"Low",salMin:55,salMax:100,skills:"OCaml/Python/C++, Algorithms, Math, DSA",rounds:"OA+Written, 3–4 Technical, Behavioral",site:"janestreet.com"},
+];
+
+const productOnlyCompanies = companies.map((company, index) => ({ ...company, rank: index + 1 }));
+const catColors = {Easy:"b-easy", Moderate:"b-moderate", Hard:"b-hard", "Very Hard":"b-vhard", Elite:"b-elite"};
+
+function salBar(min, max) {
+  const pct = Math.round((max / 100) * 100);
+  return `<div class="salary-bar"><div class="bar" style="width:${pct}px; max-width:60px;"></div><span style="font-size:11px; color:var(--color-text-secondary);">₹${min}–${max}L</span></div>`;
+}
+
+function renderTable(data) {
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+  data.forEach(c => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="color:var(--color-text-secondary); font-size:11px;">${c.rank}</td>
+      <td><div class="co-name">${c.name}</div><a class="co-site" href="https://${c.site}" target="_blank">${c.site}</a></td>
+      <td style="font-size:11px; color:var(--color-text-secondary);">${c.industry}</td>
+      <td style="font-size:11px;">${c.hq}</td>
+      <td><span class="badge ${catColors[c.cat]}">${c.cat}</span><div style="font-size:10px; color:var(--color-text-secondary); margin-top:2px;">${c.diff}/10</div></td>
+      <td><span style="font-size:11px;">${c.dsa}</span></td>
+      <td><span style="font-size:11px;">${c.sys}</span></td>
+      <td><span style="font-size:11px; color:var(--color-text-secondary);">${c.lc}</span></td>
+      <td><span class="badge ${c.fresher==='High'?'b-easy':c.fresher==='Medium'?'b-moderate':'b-hard'}">${c.fresher}</span></td>
+      <td>${salBar(c.salMin, c.salMax)}</td>
+      <td><div class="skills-wrap">${c.skills}</div></td>
+      <td style="font-size:11px; color:var(--color-text-secondary);">${c.roles}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('countLabel').textContent = `Showing ${data.length} companies`;
+}
+
+function filterTable() {
+  const diff = document.getElementById('diffFilter').value;
+  const fresher = document.getElementById('fresherFilter').value;
+  const search = document.getElementById('searchBox').value.toLowerCase();
+  const filtered = productOnlyCompanies.filter(c =>
+    (!diff || c.cat === diff) &&
+    (!fresher || c.fresher === fresher) &&
+    (!search || c.name.toLowerCase().includes(search) || c.industry.toLowerCase().includes(search))
+  );
+  renderTable(filtered);
+}
+
+function renderTiers() {
+  const tierDefs = [
+    {cat:"Easy", label:"Top 10 easiest", cls:"b-easy", icon:"ti-star"},
+    {cat:"Moderate", label:"Top 10 moderate", cls:"b-moderate", icon:"ti-chart-bar"},
+    {cat:"Hard", label:"Top 10 hard", cls:"b-hard", icon:"ti-flame"},
+    {cat:"Very Hard", label:"Top 10 very hard", cls:"b-vhard", icon:"ti-bolt"},
+    {cat:"Elite", label:"Top 10 elite", cls:"b-elite", icon:"ti-crown"},
+  ];
+  const grid = document.getElementById('tierGrid');
+  tierDefs.forEach(td => {
+    const items = productOnlyCompanies.filter(c => c.cat === td.cat).slice(0,10);
+    const card = document.createElement('div');
+    card.className = 'tier-card';
+    card.innerHTML = `<h3><i class="ti ${td.icon}" aria-hidden="true" style="font-size:16px;"></i> <span class="badge ${td.cls}">${td.label}</span></h3><ol>${items.map(c=>`<li>${c.name} <span>· ₹${c.salMin}–${c.salMax}L</span></li>`).join('')}</ol>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderFaang() {
+  const faangNames = ["Google","Meta","Apple","Netflix","Amazon","Microsoft","Nvidia","OpenAI"];
+  const faang = productOnlyCompanies.filter(c => faangNames.includes(c.name));
+  const grid = document.getElementById('faangGrid');
+  faang.forEach(c => {
+    const card = document.createElement('div');
+    card.className = 'tier-card';
+    card.style.borderLeft = '2px solid #D4537E';
+    card.innerHTML = `
+      <h3 style="justify-content:space-between;"><span>${c.name}</span><span class="badge b-faang">${c.diff}/10</span></h3>
+      <div style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px;">${c.industry} · ${c.hq}</div>
+      <div style="font-size:12px; margin-bottom:4px;"><strong>DSA:</strong> ${c.dsa} &nbsp; <strong>System:</strong> ${c.sys}</div>
+      <div style="font-size:12px; margin-bottom:4px;"><strong>LeetCode:</strong> ${c.lc}</div>
+      <div style="font-size:12px; margin-bottom:6px;"><strong>Salary:</strong> ₹${c.salMin}–${c.salMax}L</div>
+      <div class="skills-wrap">${c.skills}</div>
+      <div style="margin-top:8px;"><a href="https://${c.site}" target="_blank" style="font-size:11px;">${c.site} <i class="ti ti-external-link" aria-hidden="true" style="font-size:11px;"></i></a></div>
+    `;
+    grid.appendChild(card);
+  });
+
+  if (!window.Chart) {
+    const chartCanvas = document.getElementById('faangChart');
+    if (chartCanvas) {
+      chartCanvas.replaceWith(Object.assign(document.createElement('div'), {
+        className: 'count-label',
+        textContent: 'Chart preview needs internet access to load Chart.js'
+      }));
+    }
+    return;
+  }
+
+  new Chart(document.getElementById('faangChart'), {
+    type: 'bar',
+    data: {
+      labels: faang.map(c => c.name),
+      datasets: [
+        {
+          label: 'Max salary (LPA)',
+          data: faang.map(c => c.salMax),
+          backgroundColor: '#D4537E44',
+          borderColor: '#D4537E',
+          borderWidth: 1.5,
+        },
+        {
+          label: 'Difficulty score',
+          data: faang.map(c => c.diff * 8),
+          backgroundColor: '#7F77DD44',
+          borderColor: '#7F77DD',
+          borderWidth: 1.5,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: 'rgba(128,128,128,0.1)' }, ticks: { color: '#888' } },
+        x: { grid: { display: false }, ticks: { color: '#888', font: { size: 11 } } }
+      }
+    }
+  });
+}
+
+function renderFreshers() {
+  const highF = productOnlyCompanies.filter(c => c.fresher === 'High');
+  const medF = productOnlyCompanies.filter(c => c.fresher === 'Medium').slice(0, 6);
+  const grid = document.getElementById('freshersGrid');
+
+  const makeCard = (title, items, cls, icon) => {
+    const card = document.createElement('div');
+    card.className = 'tier-card';
+    card.innerHTML = `<h3><i class="ti ${icon}" aria-hidden="true" style="font-size:16px;"></i> <span class="badge ${cls}">${title}</span></h3><ol>${items.map(c=>`<li>${c.name} <span>· ₹${c.salMin}–${c.salMax}L · LC: ${c.lc}</span></li>`).join('')}</ol>`;
+    grid.appendChild(card);
+  };
+
+  makeCard('High fresher hiring', highF, 'b-easy', 'ti-user-check');
+  makeCard('Medium fresher hiring', medF, 'b-moderate', 'ti-users');
+}
+
+function renderRoadmap() {
+  const roadmapData = [
+    {
+      lc: '100 LC problems',
+      label: 'Tier 1 targets — starter product roles (India)',
+      skills: 'Arrays, Strings, Hashmaps, Sorting, Basic Recursion, Two Pointer, OOP, SQL basics',
+      companies: ['Zoho','SAP Labs','IBM','ServiceNow','Juspay','Freshworks','PhonePe','Razorpay','Swiggy','Zomato'],
+      color: '#27500A',
+      bg: '#EAF3DE',
+      border: '#C0DD97'
+    },
+    {
+      lc: '300 LC problems',
+      label: 'Tier 2 targets — mid-cap product companies',
+      skills: 'Trees, Graphs, BFS/DFS, DP fundamentals, Binary Search, Linked Lists, System Design basics, OS/DBMS',
+      companies: ['CRED','Meesho','Groww','Atlassian','Intuit','Nutanix','Salesforce','Adobe','Flipkart','Myntra','Dream11','LinkedIn'],
+      color: '#0C447C',
+      bg: '#E6F1FB',
+      border: '#B5D4F4'
+    },
+    {
+      lc: '500+ LC problems',
+      label: 'Tier 3 targets — FAANG & elite companies',
+      skills: 'Advanced DP, Segment Trees, Tries, Competitive CP, Advanced System Design (HLD/LLD), Distributed Systems, Behavioral (STAR)',
+      companies: ['Google','Meta','Amazon','Apple','Netflix','Microsoft','Nvidia','Stripe','Airbnb','Databricks','Snowflake','OpenAI'],
+      color: '#3C3489',
+      bg: '#EEEDFE',
+      border: '#AFA9EC'
+    },
+  ];
+
+  const container = document.getElementById('roadmapCards');
+  roadmapData.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'road-card';
+    card.style.borderLeft = `2px solid ${r.border}`;
+    card.innerHTML = `
+      <div class="road-header">
+        <div>
+          <div class="lc-badge">${r.lc}</div>
+          <div class="lc-label">${r.label}</div>
+        </div>
+      </div>
+      <div class="road-skills" style="background:${r.bg}; color:${r.color}; padding:6px 10px; border-radius:var(--border-radius-md); margin-bottom:10px; font-size:12px;">
+        <strong>Focus:</strong> ${r.skills}
+      </div>
+      <div style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px;">Target companies:</div>
+      <div class="road-companies">${r.companies.map(co=>`<span class="road-co">${co}</span>`).join('')}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+renderTable(productOnlyCompanies);
+renderTiers();
+renderFaang();
+renderFreshers();
+renderRoadmap();
+</script>
+</body>
+</html>
